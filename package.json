@@ -1,0 +1,100 @@
+{
+	"name": "chutzpahrunner",
+	"displayName": "ChutzpahRunner",
+	"author": "Danny Frencham",
+	"homepage": "https://github.com/dfrencham/vscode-chutzpahrunner/blob/master/README.md",
+	"description": "",
+	"version": "1.0.0",
+	"icon": "resources/logo.png",
+	"galleryBanner": {
+		"color": "#373436",
+		"theme": "dark"
+	},
+	"license": "MIT",
+	"extensionKind": "ui",
+	"keywords": [
+		"test",
+		"chutzpah",
+		"CI"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/dfrencham/vscode-chutzpahrunner.git"
+	},
+	"engines": {
+		"vscode": "^1.37.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.chutzpahRunner",
+		"onCommand:extension.runChutzpah",
+		"onCommand:extension.runChutzpahInBrowser"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.runChutzpah",
+				"title": "Run Chutzpah"
+			},
+			{
+				"command": "extension.runChutzpahInBrowser",
+				"title": "Run Chutzpah in browser"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "extension.runChutzpah"
+				},
+				{
+					"command": "extension.runChutzpahInBrowser"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "extension.runChutzpah"
+				},
+				{
+					"command": "extension.runChutzpahInBrowser"
+				}
+			]
+		},
+		"configuration": {
+			"title": "ChutzpahRunner",
+			"properties": {
+				"chutzpahrunner.exePath": {
+					"type": "string",
+					"description": "Path to the Chutzpah console runner binary.",
+					"default": "C:\\ProgramData\\chocolatey\\lib\\Chutzpah\\chutzpah.console.exe"
+				},
+				"chutzpahrunner.parallelism": {
+					"type": "number",
+					"description": "number of threads"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.21",
+		"@types/sinon": "^7.0.13",
+		"@types/vscode": "^1.37.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4",
+		"sinon": "^7.4.1",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode-test": "^1.0.2"
+	}
+}
