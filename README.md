@@ -4,6 +4,11 @@
 
 Execute Chutzpah tests from your context menu.
 
+[![Badge for visual studio code extension version](https://vsmarketplacebadge.apphb.com/version/dfrencham.chutzpahrunner.svg?color=blue)](https://marketplace.visualstudio.com/items?itemName=dfrencham.chutzpahrunner)
+[![Badge for visual studio code extension version](https://vsmarketplacebadge.apphb.com/installs/dfrencham.chutzpahrunner.svg?color=blue)](https://marketplace.visualstudio.com/items?itemName=dfrencham.chutzpahrunner)
+[![Badge for visual studio code extension version](https://vsmarketplacebadge.apphb.com/rating/dfrencham.chutzpahrunner.svg?color=blue)](https://marketplace.visualstudio.com/items?itemName=dfrencham.chutzpahrunner)
+[![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?color=blue&style=flat-square)](http://opensource.org/licenses/MIT)
+
 ![Chutzpah Runner Demo](./resources/demo.gif 'Demo')
 
 ## Install
@@ -31,6 +36,10 @@ Execute Chutzpah tests from your context menu.
 | --- | --- |
 | exePath | Full path of your `chutzpah.console.exe` executable |
 | parallelism | Number of threads to use when executing tests (default is auto) |
+
+## Bugs 
+
+Report bugs or enhancement requests to our [bug tracker](https://github.com/dfrencham/vscode-chutzpahrunner/issues)
 
 ## Credits
 
