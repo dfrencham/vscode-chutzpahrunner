@@ -6,8 +6,29 @@
 trigger:
 - master
 
+strategy:
+  matrix:
+    linux_node_10:
+      imageName: Hosted Ubuntu 1604
+      node_version: 10.x
+    linux_node_12:
+      imageName: Hosted Ubuntu 1604
+      node_version: 12.x
+    mac_node_10:
+      imageName: Hosted macOS
+      node_version: 10.x
+    mac_node_12:
+      imageName: Hosted macOS
+      node_version: 12.x
+    windows_node_10:
+      imageName: Hosted VS2017
+      node_version: 10.x
+    windows_node_12:
+      imageName: Hosted VS2017
+      node_version: 12.x
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: $(imageName)
 
 steps:
 - task: NodeTool@0
@@ -15,7 +36,23 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
+- bash: |
+    /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+    echo ">>> Started xvfb"
+  displayName: Start xvfb
+  condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
+  env:
+    DISPLAY: ':99.0'
+
+- bash: |
     npm install
     npm run compile
-  displayName: 'npm install and build'
+  displayName: Build
+  env:
+    DISPLAY: ':99.0'
+
+- bash: |
+    npm run test
+  displayName: Run Tests
+  env:
+    DISPLAY: ':99.0'
