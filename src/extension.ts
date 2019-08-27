@@ -42,7 +42,8 @@ export function runChutzpah(uri: vscode.Uri, openBrowser: boolean): boolean {
 	if (!openBrowser) {
 		runner.spawnTests(chutzpahPath,args,uri);
 	} else {
-		runner.terminalTests(chutzpahPath,args);
+		var terminal = runner.selectTerminal();
+		runner.terminalTests(chutzpahPath,args,terminal);
 	}
 
 	return true;

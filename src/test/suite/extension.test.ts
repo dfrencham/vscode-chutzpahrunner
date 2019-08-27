@@ -4,25 +4,11 @@ import * as sinon from 'sinon';
 import * as extension from '../../extension';
 import * as configuration from '../../configuration';
 import * as runner from '../../runner';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
-// import * as myExtension from '../extension';
 
-suite('Extension Test Suite', () => {
-	before(() => {
-		vscode.window.showInformationMessage('Start all tests.');
-	});
+suite('Extension', () => {
 
-	test('Sample test', () => {
-		assert.equal(-1, [1, 2, 3].indexOf(5));
-		assert.equal(-1, [1, 2, 3].indexOf(0));
-	});
-});
-
-suite('runChutzpah', () => {
-	test('basic test', () => {
+	test('run chutzpah', () => {
 		const stub = sinon
 		.stub(vscode.window, 'showErrorMessage')
 		.returns(Promise.resolve(undefined));
@@ -45,6 +31,29 @@ suite('runChutzpah', () => {
 		assert.equal(fakeRun.called, true);
 		assert.equal(fakeRun2.called, false);
 
-		stub.restore();
+		sinon.restore();
+	});
+
+	test('activate', () => {
+		var context =  new TestExtensionContext();
+		extension.activate(context);
+		assert.equal(context.subscriptions.length,2);
 	});
 });
+
+
+class TestExtensionContext implements vscode.ExtensionContext {
+    subscriptions: {
+		dispose(): any;
+	}[] = [];
+    workspaceState!: vscode.Memento;
+    globalState!: vscode.Memento;
+    extensionPath!: string;
+    storagePath!: string;
+    globalStoragePath!: string;
+    logPath!: string;
+
+    asAbsolutePath(relativePath: string): string {
+        return relativePath;
+    }
+}

@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { spawn } from 'child_process';
+import * as child_process from 'child_process'
 
 /**
  * Spawns test in a terminal window.
@@ -7,8 +7,7 @@ import { spawn } from 'child_process';
  * @param chutzpahPath Path to Chutzpah exe
  * @param args Arguments for Chutzpah
  */
-export function terminalTests(chutzpahPath: string, args: string[]) {
-	var terminal = selectTerminal();
+export function terminalTests(chutzpahPath: string, args: string[], terminal: vscode.Terminal) {
 	terminal.show(true);
 	if (terminal) {
 		terminal.sendText(`${chutzpahPath} ${args.join(" ")}`, true);
@@ -26,7 +25,7 @@ export function spawnTests(chutzpahPath: string, args: string[], uri: vscode.Uri
 	chutzpahChannel.show(true);
 	chutzpahChannel.append(`Chutzpah started: ${uri}`);
 
-	const proc = spawn(chutzpahPath, args,{ shell: true });
+	const proc = child_process.spawn(chutzpahPath, args,{ shell: true });
 	
 	proc.stdout.on('data', (data) => {
 		chutzpahChannel.append(`${data}`);
@@ -36,10 +35,10 @@ export function spawnTests(chutzpahPath: string, args: string[], uri: vscode.Uri
 		chutzpahChannel.append(`${data}`);
 	});
 	
-	proc.on('close', (code) => {
+	//proc.on('close', (code) => {
 		// do not print exit code
 		// chutzpahChannel.append(`${code}`);
-	});
+	//});
 }
 
 /**
@@ -47,7 +46,8 @@ export function spawnTests(chutzpahPath: string, args: string[], uri: vscode.Uri
  */
 export function selectTerminal(): vscode.Terminal {
 
-	const terminals = <vscode.Terminal[]>(<any>vscode.window).terminals;	
+	//const terminals = <vscode.Terminal[]>(<any>vscode.window).terminals;	
+	const terminals = vscode.window.terminals;
 
 	if (terminals.length) {
 		return terminals[terminals.length-1];
