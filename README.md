@@ -9,6 +9,8 @@ Execute Chutzpah tests from your context menu.
 [![Badge for visual studio code extension version](https://vsmarketplacebadge.apphb.com/rating/dfrencham.chutzpahrunner.svg?color=blue)](https://marketplace.visualstudio.com/items?itemName=dfrencham.chutzpahrunner)
 [![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?color=blue&style=flat-square)](http://opensource.org/licenses/MIT)
 
+[![Build Status](https://dev.azure.com/dannypf/vscode-chutzpahrunner/_apis/build/status/dfrencham.vscode-chutzpahrunner?branchName=master)](https://dev.azure.com/dannypf/vscode-chutzpahrunner/_build/latest?definitionId=1&branchName=master)
+
 ![Chutzpah Runner Demo](./resources/demo.gif 'Demo')
 
 ## Install
