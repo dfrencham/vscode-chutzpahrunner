@@ -7,11 +7,7 @@ export function run(): Promise<void> {
   // Create the mocha test
   const mocha = new Mocha({
     ui: 'tdd',
-    //----------------------------------------
-    // Stuff from old test setup
     timeout: 7500, // longer timeout, in case
-    useColors: true, // colored output from test results
-    //----------------------------------------
     reporter: 'mocha-multi-reporters',
     reporterOptions: {
       reporterEnabled: 'spec, xunit',
