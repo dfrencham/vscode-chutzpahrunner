@@ -1,4 +1,6 @@
 out
+out-cov
+coverage
 node_modules
 .vscode-test/
 *.vsix
