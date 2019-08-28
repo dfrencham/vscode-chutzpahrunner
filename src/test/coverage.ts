@@ -68,8 +68,6 @@ export function createReport(): void {
     watermarks,
   });
 
-  console.log(`create reports at ${REPO_ROOT} coverage`);
-
   const reports = [
     iReports.create('json'),
     iReports.create('lcov'),
@@ -78,7 +76,6 @@ export function createReport(): void {
   ];
   reports.forEach(report => {
     tree.visit(report, context);
-    console.log(`Report`);
   });
 }
 

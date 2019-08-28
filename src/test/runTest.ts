@@ -13,9 +13,7 @@ async function main() {
 		// Passed to --extensionTestsPath
 		let extensionTestsPath = path.resolve(__dirname, './suite/index');
 
-		console.log("coverage?");
 		if (process.argv.indexOf('--coverage') >= 0) {
-			console.log("coverage!");
 			// generate instrumented files at out-cov
 			instrument();
 	  
