@@ -38,9 +38,7 @@ export function runChutzpah(uri: vscode.Uri, openBrowser: boolean): boolean {
 		args.push(...["/parallelism",parallelism.toString()]);
 
 	if (!openBrowser) {
-		vscode.window.showInformationMessage('Chutzpah run started');
 		runner.spawnTests(chutzpahPath,args,uri);
-		vscode.window.showInformationMessage('Chutzpah run complete');
 	} else {
 		var terminal = runner.selectTerminal();
 		runner.terminalTests(chutzpahPath,args,terminal);
