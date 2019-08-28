@@ -6,10 +6,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let disposables = [];
 	disposables.push(vscode.commands.registerCommand('extension.runChutzpah', (uri: vscode.Uri) => {	
-		runChutzpah(uri,false);
+		runChutzpah(uri,false,false);
 	}));
 	disposables.push(vscode.commands.registerCommand('extension.runChutzpahInBrowser', (uri: vscode.Uri) => {
-		runChutzpah(uri,true);
+		runChutzpah(uri,true,false);
+	}));
+	disposables.push(vscode.commands.registerCommand('extension.runChutzpahWithCoverage', (uri: vscode.Uri) => {
+		runChutzpah(uri,true,true);
 	}));
 
 	context.subscriptions.push(...disposables);
@@ -22,7 +25,7 @@ export function deactivate() {}
  * @param uri File or folder path to test
  * @param openBrowser Open in browser for debug
  */
-export function runChutzpah(uri: vscode.Uri, openBrowser: boolean): boolean {
+export function runChutzpah(uri: vscode.Uri, openBrowser: boolean, coverage: boolean): boolean {
 
 	var chutzpahPath = configuration.getChutzpahPath();
 	if (chutzpahPath == "") {
@@ -36,6 +39,8 @@ export function runChutzpah(uri: vscode.Uri, openBrowser: boolean): boolean {
 		args.push(...["/openInBrowser","chrome"]);
 	if (parallelism)
 		args.push(...["/parallelism",parallelism.toString()]);
+	if (coverage)
+		args.push("/coverage")
 
 	if (!openBrowser) {
 		runner.spawnTests(chutzpahPath,args,uri);

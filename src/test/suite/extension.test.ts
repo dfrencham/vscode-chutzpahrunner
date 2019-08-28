@@ -26,7 +26,7 @@ suite('Extension', () => {
 		sinon.replace(runner,'terminalTests', fakeRun2);		
 
 		var uri = { fsPath: "path" } as vscode.Uri;
-		extension.runChutzpah(uri, false);
+		extension.runChutzpah(uri, false, false);
 
 		assert.equal(fakeRun.called, true);
 		assert.equal(fakeRun2.called, false);
@@ -37,7 +37,7 @@ suite('Extension', () => {
 	test('activate', () => {
 		var context =  new TestExtensionContext();
 		extension.activate(context);
-		assert.equal(context.subscriptions.length,2);
+		assert.equal(context.subscriptions.length,3);
 	});
 });
 

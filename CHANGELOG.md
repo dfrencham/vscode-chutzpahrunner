@@ -2,6 +2,10 @@
 
 All notable changes to the "chutzpahrunner" extension will be documented in this file.
 
+## [1.2.0]
+
+- [Added] Run with coverage option
+
 ## [1.1.1]
 
 - [Updated] Removed annoying notifications

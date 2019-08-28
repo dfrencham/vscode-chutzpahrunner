@@ -5,7 +5,7 @@
 	"publisher": "dfrencham",
 	"homepage": "https://github.com/dfrencham/vscode-chutzpahrunner/blob/master/README.md",
 	"description": "",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"icon": "resources/logo.png",
 	"galleryBanner": {
 		"color": "#373436",
@@ -31,7 +31,8 @@
 	"activationEvents": [
 		"onCommand:extension.chutzpahRunner",
 		"onCommand:extension.runChutzpah",
-		"onCommand:extension.runChutzpahInBrowser"
+		"onCommand:extension.runChutzpahInBrowser",
+		"onCommand:extension.runChutzpahWithCoverage"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -43,7 +44,11 @@
 			{
 				"command": "extension.runChutzpahInBrowser",
 				"title": "Run Chutzpah in browser"
-			}
+			},
+			{
+				"command": "extension.runChutzpahWithCoverage",
+				"title": "Run Chutzpah with coverage"
+			}	
 		],
 		"menus": {
 			"explorer/context": [
@@ -52,6 +57,9 @@
 				},
 				{
 					"command": "extension.runChutzpahInBrowser"
+				},
+				{
+					"command": "extension.runChutzpahWithCoverage"
 				}
 			],
 			"editor/context": [
@@ -60,6 +68,9 @@
 				},
 				{
 					"command": "extension.runChutzpahInBrowser"
+				},
+				{
+					"command": "extension.runChutzpahWithCoverage"
 				}
 			]
 		},

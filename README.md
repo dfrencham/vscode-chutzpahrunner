@@ -29,8 +29,10 @@ Execute Chutzpah tests from your context menu.
 ## Usage 
 
 1. Right click a .js file in the explorer
-1. Select "Run Chutzpah" to run in headless mode; or
-1. Select "Run Chutzpah in browser" to run in Chrome for debugging
+1. Select: 
+   - "Run Chutzpah" to run in headless mode; or
+   - "Run Chutzpah in browser" to run in Chrome for debugging; or
+   - "Run Chutzpah with coverage" to run in Chrome with code coverage
 
 ## Configuration Options
 
@@ -41,9 +43,9 @@ Execute Chutzpah tests from your context menu.
 
 ## Bugs 
 
-Report bugs or enhancement requests to our [bug tracker](https://github.com/dfrencham/vscode-chutzpahrunner/issues)
+Report bugs or feature requests to the [bug tracker](https://github.com/dfrencham/vscode-chutzpahrunner/issues)
 
 ## Credits
 
-- [@mmanela](http://twitter.com/mmanela) for writing the very useful Chutzpah test runner
-- The VSCode team for this fantastic editor
+- [@mmanela](http://twitter.com/mmanela) for writing the excellent Chutzpah test runner
+- [VSCode](https://code.visualstudio.com/) for being awesome
