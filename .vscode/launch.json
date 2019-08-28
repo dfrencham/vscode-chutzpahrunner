@@ -31,6 +31,21 @@
 				"${workspaceFolder}/out/test/**/*.js"
 			],
 			"preLaunchTask": "npm: watch"
+		},
+		{
+			"name": "Extension Tests Cover",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/out-cov/test/suite/index",
+				"--coverage"
+			],
+			"outFiles": [
+				"${workspaceFolder}/out-cov/test/**/*.js"
+			],
+			"preLaunchTask": "npm: watch"
 		}
 	]
 }
