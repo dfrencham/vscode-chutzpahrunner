@@ -1,12 +1,24 @@
 import * as assert from 'assert';
-import { before } from 'mocha';
+import { beforeEach, afterEach } from 'mocha';
 import * as sinon from 'sinon';
 import * as extension from '../../extension';
 import * as configuration from '../../configuration';
 import * as runner from '../../runner';
 import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as stubHelper from './stubHelper';
 
 suite('Extension', () => {
+
+	var fsStub: any;
+	
+	beforeEach(() => {
+		fsStub = sinon.stub(fs, 'statSync').returns(stubHelper.getFakeDirectory());
+	});
+
+	afterEach(() => {
+		fsStub.restore();
+	});
 
 	test('run chutzpah', () => {
 		const stub = sinon
@@ -39,8 +51,14 @@ suite('Extension', () => {
 		extension.activate(context);
 		assert.equal(context.subscriptions.length,3);
 	});
-});
 
+	test('getPathFromUri', () => {
+		var uri = { fsPath: "path" } as vscode.Uri;
+		var result = extension.getPathFromUri(uri);
+		assert.equal(result != "", true);
+
+	});
+});
 
 class TestExtensionContext implements vscode.ExtensionContext {
     subscriptions: {

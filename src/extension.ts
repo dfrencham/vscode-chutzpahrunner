@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import * as configuration from './configuration';
 import * as runner from './runner';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -33,8 +35,9 @@ export function runChutzpah(uri: vscode.Uri, openBrowser: boolean, coverage: boo
 		return false;
 	}
 	var parallelism = configuration.getParallelism();
+	var testPath = getPathFromUri(uri);
 
-	let args = [uri.fsPath,"/engine","chrome"];
+	let args = [testPath,"/engine","chrome"];
 	if (openBrowser)
 		args.push(...["/openInBrowser","chrome"]);
 	if (parallelism)
@@ -43,11 +46,30 @@ export function runChutzpah(uri: vscode.Uri, openBrowser: boolean, coverage: boo
 		args.push("/coverage")
 
 	if (!openBrowser) {
-		runner.spawnTests(chutzpahPath,args,uri);
+		runner.spawnTests(chutzpahPath,args,testPath);
 	} else {
 		var terminal = runner.selectTerminal();
 		runner.terminalTests(chutzpahPath,args,terminal);
 	}
 
 	return true;
+}
+
+/**
+ * Converts vscode URI to path
+ * Returns empty string if path not found.
+ * Add trailing slash for folder.
+ * @param uri 
+ * @todo Move to utility class
+ */
+export function getPathFromUri(uri: vscode.Uri): string {
+	var result = fs.statSync(uri.fsPath);
+	if (!result) {
+		return "";
+	} else {
+		if (result.isDirectory()) {
+			return uri.fsPath.endsWith(path.sep) ? uri.fsPath : uri.fsPath + path.sep;
+		}
+		return uri.fsPath;
+	}
 }

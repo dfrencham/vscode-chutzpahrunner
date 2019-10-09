@@ -35,8 +35,7 @@ suite('Runner', () => {
 
         sinon.stub(child_process, 'spawn').returns(fakeChild as child_process.ChildProcess);
 
-        var uri = { fsPath: "path" } as vscode.Uri;
-        runner.spawnTests("test",["blah"],uri);
+        runner.spawnTests("test",["blah"],"path");
 
         assert.equal(testChannel.showCalled,true);
         assert.equal(testChannel.appendCalled,true);

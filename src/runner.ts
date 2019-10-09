@@ -10,6 +10,7 @@ import * as child_process from 'child_process'
 export function terminalTests(chutzpahPath: string, args: string[], terminal: vscode.Terminal) {
 	terminal.show(true);
 	if (terminal) {
+		terminal.sendText("", true); // account for previous test runs
 		terminal.sendText(`${chutzpahPath} ${args.join(" ")}`, true);
 	}
 }
@@ -18,12 +19,12 @@ export function terminalTests(chutzpahPath: string, args: string[], terminal: vs
  * Spawns test in dedicated output channel
  * @param chutzpahPath Path to Chutzpah exe
  * @param args Arguments for Chutzpah
- * @param uri Path to tests, used for display only
+ * @param testPath Path to tests, used for display only
  */
-export function spawnTests(chutzpahPath: string, args: string[], uri: vscode.Uri) {
+export function spawnTests(chutzpahPath: string, args: string[], testPath: string) {
 	let chutzpahChannel = vscode.window.createOutputChannel('ChutzpahOutput');
 	chutzpahChannel.show(true);
-	chutzpahChannel.append(`Chutzpah started: ${uri}`);
+	chutzpahChannel.appendLine(`Chutzpah started: ${testPath}`);
 
 	const proc = child_process.spawn(chutzpahPath, args,{ shell: true });
 	
