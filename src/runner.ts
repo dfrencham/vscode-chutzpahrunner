@@ -21,7 +21,7 @@ export function terminalTests(chutzpahPath: string, args: string[], terminal: vs
  * @param uri Path to tests, used for display only
  */
 export function spawnTests(chutzpahPath: string, args: string[], uri: vscode.Uri) {
-	let chutzpahChannel = vscode.window.createOutputChannel('ChuzpahOutput');
+	let chutzpahChannel = vscode.window.createOutputChannel('ChutzpahOutput');
 	chutzpahChannel.show(true);
 	chutzpahChannel.append(`Chutzpah started: ${uri}`);
 
