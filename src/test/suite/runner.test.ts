@@ -77,7 +77,7 @@ class TestOutputChannel implements vscode.OutputChannel {
         this.appendCalled = true;
     }
     appendLine(value: string): void {
-        console.log("appendLine");
+        this.appendCalled = true;
     }
     clear(): void {
         console.log("clear");
