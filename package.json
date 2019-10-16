@@ -5,7 +5,7 @@
 	"publisher": "dfrencham",
 	"homepage": "https://github.com/dfrencham/vscode-chutzpahrunner/blob/master/README.md",
 	"description": "",
-	"version": "1.2.1",
+	"version": "1.3.0",
 	"icon": "resources/logo.png",
 	"galleryBanner": {
 		"color": "#373436",
@@ -85,6 +85,16 @@
 				"chutzpahrunner.parallelism": {
 					"type": "number",
 					"description": "number of threads"
+				},
+				"chutzpahrunner.disableCORS": {
+					"type": "boolean",
+					"description": "Disable Cross Origin scripting",
+					"default": "true"
+				},
+				"chutzpahrunner.chromeProfileFolder": {
+					"type": "string",
+					"description": "Temporary directory for Chrome profile. By default C:/ChromeDevSession or ~/ChromeDevSession will be used",
+					"default": ""
 				}
 			}
 		}

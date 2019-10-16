@@ -38,6 +38,8 @@ Execute Chutzpah tests from your context menu.
 
 | Option | Description |
 | --- | --- |
+| disableCORS | Disable cross origin checks during tests |
+| chromeProfileFolder | Temporary directory for Chrome profile. By default C:/ChromeDevSession or ~/ChromeDevSession will be used |
 | exePath | Full path of your `chutzpah.console.exe` executable |
 | parallelism | Number of threads to use when executing tests (default is auto) |
 

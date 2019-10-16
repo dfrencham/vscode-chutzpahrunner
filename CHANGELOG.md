@@ -2,6 +2,11 @@
 
 All notable changes to the "chutzpahrunner" extension will be documented in this file.
 
+## [1.3.0]
+
+- [Added] option to disable CORS
+- [Added] override for chrome profile path
+
 ## [1.2.1]
 
 - [Fixed] Trailing slash added to calls on directories

@@ -22,8 +22,25 @@ export function getChutzpahPath(): string {
  * Gets the configured value for Parallelism
  */
 export function getParallelism(): number {
-
     let vsConfig = vscode.workspace.getConfiguration("chutzpahrunner");
     let parallelism = vsConfig.get<number>("parallelism") || 0;
     return parallelism;
+}
+
+/**
+ * Gets the configured value for disableCORS
+ */
+export function getDisableCORS(): boolean {
+    let vsConfig = vscode.workspace.getConfiguration("chutzpahrunner");
+    let disableCORS = vsConfig.get<boolean>("disableCORS") || false;
+    return disableCORS;
+}
+
+/**
+ * Gets the temp folder for a chrome profile
+ */
+export function getChromeProfileFolder(): string {
+    let vsConfig = vscode.workspace.getConfiguration("chutzpahrunner");
+    let item = vsConfig.get<string>("chromeProfileFolder") || "";
+    return item;
 }
