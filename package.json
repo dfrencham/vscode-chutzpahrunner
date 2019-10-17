@@ -48,7 +48,7 @@
 			{
 				"command": "extension.runChutzpahWithCoverage",
 				"title": "Run Chutzpah with coverage"
-			}	
+			}
 		],
 		"menus": {
 			"explorer/context": [
@@ -103,9 +103,10 @@
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile",
+		"pretest": "npm run compile && npm run clean",
+		"clean": "rimraf coverage",
 		"test": "node ./out/test/runTest.js",
-		"test:coverage": "node ./out/test/runTest.js --coverage"
+		"test:coverage": "npm run pretest && node ./out/test/runTest.js --coverage"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
@@ -126,6 +127,7 @@
 		"istanbul-reports": "^2.2.6",
 		"mocha": "^6.2.0",
 		"mocha-multi-reporters": "^1.1.7",
+		"rimraf": "^3.0.0",
 		"sinon": "^7.4.1",
 		"tslint": "^5.12.1",
 		"typescript": "^3.3.1",

@@ -72,6 +72,7 @@ export function createReport(): void {
     iReports.create('json'),
     iReports.create('lcov'),
     iReports.create('html'),
+    iReports.create('text',{ 'file': 'summary.txt'}),
     iReports.create('cobertura'),
   ];
   reports.forEach(report => {

@@ -43,6 +43,10 @@ Execute Chutzpah tests from your context menu.
 | exePath | Full path of your `chutzpah.console.exe` executable |
 | parallelism | Number of threads to use when executing tests (default is auto) |
 
+## Contributing
+
+Pull requests are welcome. Please see [contributing](contributing.md) for instructions on how to build and test the extension.
+
 ## Bugs 
 
 Report bugs or feature requests to the [bug tracker](https://github.com/dfrencham/vscode-chutzpahrunner/issues)

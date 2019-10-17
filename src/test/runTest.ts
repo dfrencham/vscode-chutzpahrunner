@@ -14,6 +14,8 @@ async function main() {
 		let extensionTestsPath = path.resolve(__dirname, './suite/index');
 
 		if (process.argv.indexOf('--coverage') >= 0) {
+			console.log('Instrumenting files for test coverage...');
+
 			// generate instrumented files at out-cov
 			instrument();
 	  
