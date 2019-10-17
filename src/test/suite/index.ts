@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as Mocha from 'mocha';
 import * as glob from 'glob';
+import * as fs from 'fs';
 import { createReport } from '../coverage';
 
 export function run(): Promise<void> {
@@ -46,6 +47,15 @@ export function run(): Promise<void> {
     // Tests have finished executing, check if we should generate a coverage report
     if (process.env['GENERATE_COVERAGE']) {
       createReport();
+      try {
+        // print out text summary
+        var summaryPath = path.resolve(__dirname, '../../../coverage/summary.txt');
+        var report = fs.readFileSync(summaryPath,"utf8");
+        console.log(report);
+        console.log('HTML coverage report available in /coverage directory');
+      } catch (e) {
+        console.error(`Failed to read summary report ${e}`);
+      }
     }
   });
 }

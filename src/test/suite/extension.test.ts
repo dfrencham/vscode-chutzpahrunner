@@ -46,17 +46,28 @@ suite('Extension', () => {
 		sinon.restore();
 	});
 
+	test('run chutzpah - bad path', () => {
+		const stub = sinon
+		.stub(vscode.window, 'showErrorMessage')
+		.returns(Promise.resolve(undefined));
+
+		var fake = sinon.fake.returns("");
+		sinon.replace(configuration,'getChutzpahPath',fake);
+
+		var fake2 = sinon.fake.returns('path');
+		sinon.replace(configuration,'getParallelism',fake2);		
+
+		var uri = { fsPath: "" } as vscode.Uri;
+		var result = extension.runChutzpah(uri, true, true);
+
+		assert.equal(result, false);
+		sinon.restore();
+	});	
+
 	test('activate', () => {
 		var context =  new TestExtensionContext();
 		extension.activate(context);
 		assert.equal(context.subscriptions.length,3);
-	});
-
-	test('getPathFromUri', () => {
-		var uri = { fsPath: "path" } as vscode.Uri;
-		var result = extension.getPathFromUri(uri);
-		assert.equal(result != "", true);
-
 	});
 });
 
