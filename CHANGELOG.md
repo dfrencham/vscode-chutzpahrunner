@@ -2,6 +2,10 @@
 
 All notable changes to the "chutzpahrunner" extension will be documented in this file.
 
+## [1.3.1]
+
+- [Fixed] Tests don't run if space in path name
+
 ## [1.3.0]
 
 - [Added] option to disable CORS
