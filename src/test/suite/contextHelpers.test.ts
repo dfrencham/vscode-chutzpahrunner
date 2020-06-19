@@ -26,7 +26,7 @@ suite('ContextHelpers', () => {
 	test('getPathFromUri', () => {
 		var uri = { fsPath: "path" } as vscode.Uri;
 		var result = contextHelpers.getPathFromUri(uri);
-		assert.equal(result != "", true);
+		assert.equal(result !== "", true);
     });
     
     test('isWindows', () => {

@@ -42,7 +42,7 @@ export function runChutzpah(uri: vscode.Uri, openBrowser: boolean, coverage: boo
 	let disableCORS = configuration.getDisableCORS();
 	if (disableCORS) {
 		args.push("/browserArgs");
-		args.push(`--disable-web-security --user-data-dir="${contextHelpers.getChromeProfilePath()}"`);
+		args.push(`"--disable-web-security --user-data-dir=${contextHelpers.getChromeProfilePath()}"`);
 	}
 
 	if (openBrowser)
