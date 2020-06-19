@@ -2,6 +2,11 @@
 
 All notable changes to the "chutzpahrunner" extension will be documented in this file.
 
+## [1.3.2]
+
+- [Fixed] Running tests against folders breaks
+- [Fixed] Run Chutzpah creates a new output window every time
+
 ## [1.3.1]
 
 - [Fixed] Tests don't run if space in path name

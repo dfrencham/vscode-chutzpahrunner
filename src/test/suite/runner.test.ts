@@ -35,7 +35,7 @@ suite('Runner', () => {
 
         sinon.stub(child_process, 'spawn').returns(fakeChild as child_process.ChildProcess);
 
-        runner.spawnTests("test",["blah"],"path");
+        runner.spawnTests("test",["blah"],"path", undefined);
 
         assert.equal(testChannel.showCalled,true);
         assert.equal(testChannel.appendCalled,true);

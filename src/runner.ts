@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import * as child_process from 'child_process'
+import * as child_process from 'child_process';
 
 /**
  * Spawns test in a terminal window.
@@ -8,7 +8,6 @@ import * as child_process from 'child_process'
  * @param args Arguments for Chutzpah
  */
 export function terminalTests(chutzpahPath: string, args: string[], terminal: vscode.Terminal) {
-	args[0] = `"${args[0]}"`;
 	terminal.show(true);
 	if (terminal) {
 		terminal.sendText("", true); // account for previous test runs
@@ -22,9 +21,8 @@ export function terminalTests(chutzpahPath: string, args: string[], terminal: vs
  * @param args Arguments for Chutzpah
  * @param testPath Path to tests, used for display only
  */
-export function spawnTests(chutzpahPath: string, args: string[], testPath: string) {
-	let chutzpahChannel = vscode.window.createOutputChannel('ChutzpahOutput');
-	args[0] = `"${args[0]}"`;
+export function spawnTests(chutzpahPath: string, args: string[], testPath: string, channel?: vscode.OutputChannel): vscode.OutputChannel {
+	let chutzpahChannel = channel ?? vscode.window.createOutputChannel('ChutzpahOutput');
 	chutzpahChannel.show(true);
 	chutzpahChannel.appendLine(`Chutzpah started: ${testPath}`);
 
@@ -42,6 +40,8 @@ export function spawnTests(chutzpahPath: string, args: string[], testPath: strin
 		// do not print exit code
 		// chutzpahChannel.append(`${code}`);
 	//});
+	
+	return chutzpahChannel;
 }
 
 /**
