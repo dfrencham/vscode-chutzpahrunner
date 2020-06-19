@@ -9,7 +9,7 @@ export function getChutzpahPath(): string {
         let vsConfig = vscode.workspace.getConfiguration("chutzpahrunner");
         let exePath = vsConfig.get<string>("exePath") || "";
 
-        if ((exePath != "") && (fs.existsSync(exePath))) {
+        if ((exePath !== "") && (fs.existsSync(exePath))) {
             return exePath;
         }
     } catch (error) {

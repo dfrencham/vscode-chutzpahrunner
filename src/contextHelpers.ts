@@ -17,7 +17,8 @@ export function getPathFromUri(uri: vscode.Uri): string {
 		return "";
 	} else {
 		if (result.isDirectory()) {
-			return uri.fsPath.endsWith(path.sep) ? uri.fsPath : uri.fsPath + path.sep;
+			// chutzpah now appears to break if ending path with /
+			return uri.fsPath.endsWith(path.sep) ? uri.fsPath.substring(0,uri.fsPath.length-1) : uri.fsPath;
 		}
 		return uri.fsPath;
 	}

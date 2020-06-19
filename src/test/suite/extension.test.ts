@@ -1,3 +1,4 @@
+import { StateBag } from './../../stateBag';
 import * as assert from 'assert';
 import { beforeEach, afterEach } from 'mocha';
 import * as sinon from 'sinon';
@@ -38,7 +39,7 @@ suite('Extension', () => {
 		sinon.replace(runner,'terminalTests', fakeRun2);		
 
 		var uri = { fsPath: "path" } as vscode.Uri;
-		extension.runChutzpah(uri, false, false);
+		extension.runChutzpah(uri, false, false, {} as StateBag);
 
 		assert.equal(fakeRun.called, true);
 		assert.equal(fakeRun2.called, false);
@@ -58,7 +59,7 @@ suite('Extension', () => {
 		sinon.replace(configuration,'getParallelism',fake2);		
 
 		var uri = { fsPath: "" } as vscode.Uri;
-		var result = extension.runChutzpah(uri, true, true);
+		var result = extension.runChutzpah(uri, true, true, {} as StateBag);
 
 		assert.equal(result, false);
 		sinon.restore();
