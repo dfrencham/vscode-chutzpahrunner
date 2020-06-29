@@ -10,8 +10,20 @@ import * as child_process from 'child_process';
 export function terminalTests(chutzpahPath: string, args: string[], terminal: vscode.Terminal) {
 	terminal.show(true);
 	if (terminal) {
+		
 		terminal.sendText("", true); // account for previous test runs
-		terminal.sendText(`${chutzpahPath} ${args.join(" ")}`, true);
+
+		var termType = vscode.env.shell.toLocaleLowerCase();
+		if (termType.includes("cmd")) {
+			terminal.sendText(`"${chutzpahPath}" ${args.join(" ")}`, true);
+
+		} else if (termType.includes("powershell")) {
+			terminal.sendText(`& '${chutzpahPath}' ${args.join(" ").split("\"").join("'")}`, true);
+
+		} else if (termType.includes("wsl") || (termType.includes("bash"))) {
+			const unixPath = chutzpahPath[0].toLocaleLowerCase() + chutzpahPath.substring(2).split("\\").join("/");
+			terminal.sendText(`"/mnt/${unixPath}" ${args.join(" ")}`, true);
+		}
 	}
 }
 
@@ -26,7 +38,7 @@ export function spawnTests(chutzpahPath: string, args: string[], testPath: strin
 	chutzpahChannel.show(true);
 	chutzpahChannel.appendLine(`Chutzpah started: ${testPath}`);
 
-	const proc = child_process.spawn(chutzpahPath, args,{ shell: true });
+	const proc = child_process.spawn(`"${chutzpahPath}"`, args,{ shell: true });
 	
 	proc.stdout.on('data', (data) => {
 		chutzpahChannel.append(`${data}`);
@@ -49,12 +61,13 @@ export function spawnTests(chutzpahPath: string, args: string[], testPath: strin
  */
 export function selectTerminal(): vscode.Terminal {
 
-	//const terminals = <vscode.Terminal[]>(<any>vscode.window).terminals;	
 	const terminals = vscode.window.terminals;
-
-	if (terminals.length) {
-		return terminals[terminals.length-1];
-	} else {
-		return vscode.window.createTerminal(`Ext Terminal #1`);
+	const terminalName = 'ChutzpahTerm';
+	const testTerminal = terminals.filter((a)=>a.name===terminalName);
+	
+	if (testTerminal.length) {
+		testTerminal[0].dispose();
 	}
+
+	return vscode.window.createTerminal(`ChutzpahTerm`);
 }
