@@ -48,6 +48,31 @@ suite('Runner', () => {
         var result = runner.selectTerminal();
         assert.notEqual(result,undefined);
     });
+
+    test('format cmd', () => {
+        const cmd = "c:\\tools\\chutzpah.exe";
+        const args = ["/engine chrome"];
+        const result = runner.formatCmd(cmd,args);
+
+        assert.strictEqual(result,'"c:\\tools\\chutzpah.exe" /engine chrome');
+    });
+
+    test('format powershell', () => {
+        const cmd = "c:\\tools\\chutzpah.exe";
+        const args = ["/engine chrome"];
+        const result = runner.formatPowershell(cmd,args);
+
+        assert.strictEqual(result,"& 'c:\\tools\\chutzpah.exe' /engine chrome");
+    });
+
+    test('format *nix', () => {
+        const cmd = "c:\\tools\\chutzpah.exe";
+        const args = ["/engine chrome"];
+        const result = runner.formatUnix(cmd,args);
+
+        assert.strictEqual(result,'"/mnt/c/tools/chutzpah.exe" /engine chrome');
+    });
+
 });
 
 class TestTerminal implements vscode.Terminal {

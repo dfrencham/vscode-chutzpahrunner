@@ -14,16 +14,15 @@ export function terminalTests(chutzpahPath: string, args: string[], terminal: vs
 		terminal.sendText("", true); // account for previous test runs
 
 		var termType = vscode.env.shell.toLocaleLowerCase();
-		if (termType.includes("cmd")) {
-			terminal.sendText(`"${chutzpahPath}" ${args.join(" ")}`, true);
+		if (termType.includes("cmd")) 
+			terminal.sendText(formatCmd(chutzpahPath, args), true);
+			
+		else if (termType.includes("powershell"))
+			terminal.sendText(formatPowershell(chutzpahPath, args), true);
 
-		} else if (termType.includes("powershell")) {
-			terminal.sendText(`& '${chutzpahPath}' ${args.join(" ").split("\"").join("'")}`, true);
-
-		} else if (termType.includes("wsl") || (termType.includes("bash"))) {
-			const unixPath = chutzpahPath[0].toLocaleLowerCase() + chutzpahPath.substring(2).split("\\").join("/");
-			terminal.sendText(`"/mnt/${unixPath}" ${args.join(" ")}`, true);
-		}
+		else if (termType.includes("wsl") || termType.includes("bash"))
+			terminal.sendText(formatUnix(chutzpahPath, args), true);
+		
 	}
 }
 
@@ -70,4 +69,29 @@ export function selectTerminal(): vscode.Terminal {
 	}
 
 	return vscode.window.createTerminal(`ChutzpahTerm`);
+}
+
+/**
+ * Format command string for cmd shell
+ * @param cmd 
+ */
+export function formatCmd(cmd: string, args: string[]): string {
+	return `"${cmd}" ${args.join(" ")}`;
+}
+
+/**
+ * Format command string for powershell shell
+ * @param cmd 
+ */
+export function formatPowershell(cmd: string, args: string[]): string {
+	return `& '${cmd}' ${args.join(" ").split("\"").join("'")}`;
+}
+
+/**
+ * Format command string for *nix shell
+ * @param cmd 
+ */
+export function formatUnix(cmd: string, args: string[]): string {
+	const unixPath = cmd[0].toLocaleLowerCase() + cmd.substring(2).split("\\").join("/");
+	return `"/mnt/${unixPath}" ${args.join(" ")}`;
 }
