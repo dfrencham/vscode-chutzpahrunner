@@ -45,8 +45,11 @@ suite('Runner', () => {
     });
 
 	test('select terminal', () => {
+        vscode.window.createTerminal(`ChutzpahTerm`);
         var result = runner.selectTerminal();
-        assert.notEqual(result,undefined);
+        return result.processId.then(()=>{
+            assert.notEqual(result,undefined);
+        });
     });
 
     test('format cmd', () => {
