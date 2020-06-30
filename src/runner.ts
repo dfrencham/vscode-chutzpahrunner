@@ -14,14 +14,16 @@ export function terminalTests(chutzpahPath: string, args: string[], terminal: vs
 		terminal.sendText("", true); // account for previous test runs
 
 		var termType = vscode.env.shell.toLocaleLowerCase();
-		if (termType.includes("cmd")) 
-			terminal.sendText(formatCmd(chutzpahPath, args), true);
 			
-		else if (termType.includes("powershell"))
+		if (termType.includes("powershell"))
 			terminal.sendText(formatPowershell(chutzpahPath, args), true);
 
 		else if (termType.includes("wsl") || termType.includes("bash"))
 			terminal.sendText(formatUnix(chutzpahPath, args), true);
+
+		else 
+			// assume cmd if nothing else matches
+			terminal.sendText(formatCmd(chutzpahPath, args), true);
 		
 	}
 }
