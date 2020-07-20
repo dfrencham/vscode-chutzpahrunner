@@ -2,6 +2,15 @@
 
 All notable changes to the "chutzpahrunner" extension will be documented in this file.
 
+## [1.4.0]
+
+- [Fixed] Test runner has been rewritten to remove dependency on VSCode terminal
+- [Fixed] "Run in Browser" renamed to "Run in Chrome"
+- [Fixed] Set working directory when launching Chutzpah to ensure chutzpah.json is picked up
+- [Added] Debug option
+- [Added] Trace option
+- [Added] Engine option
+
 ## [1.3.2]
 
 - [Fixed] Running tests against folders breaks
