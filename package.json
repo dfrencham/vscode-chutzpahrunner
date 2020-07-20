@@ -5,7 +5,7 @@
 	"publisher": "dfrencham",
 	"homepage": "https://github.com/dfrencham/vscode-chutzpahrunner/blob/master/README.md",
 	"description": "",
-	"version": "1.3.3",
+	"version": "1.4.0",
 	"icon": "resources/logo.png",
 	"galleryBanner": {
 		"color": "#373436",
@@ -25,7 +25,7 @@
 		"url": "https://github.com/dfrencham/vscode-chutzpahrunner.git"
 	},
 	"engines": {
-		"vscode": "^1.37.0"
+		"vscode": "^1.40.0"
 	},
 	"categories": [
 		"Other"
@@ -45,7 +45,7 @@
 			},
 			{
 				"command": "extension.runChutzpahInBrowser",
-				"title": "Run Chutzpah in browser"
+				"title": "Run Chutzpah in Chrome"
 			},
 			{
 				"command": "extension.runChutzpahWithCoverage",
@@ -91,12 +91,32 @@
 				"chutzpahrunner.disableCORS": {
 					"type": "boolean",
 					"description": "Disable Cross Origin scripting",
-					"default": "true"
+					"default": true
 				},
 				"chutzpahrunner.chromeProfileFolder": {
 					"type": "string",
 					"description": "Temporary directory for Chrome profile. By default C:/ChromeDevSession or ~/ChromeDevSession will be used",
 					"default": ""
+				},
+				"chutzpahrunner.engine": {
+					"type": "string",
+					"description": "Browser engine to use",
+					"enum": [
+						"chrome",
+						"JSDom",
+						"phantom"
+					],
+					"default": "chrome"
+				},
+				"chutzpahrunner.debug": {
+					"type": "boolean",
+					"description": "Print debugging information and tracing to console",
+					"default": false
+				},
+				"chutzpahrunner.trace": {
+					"type": "boolean",
+					"description": "Logs tracing information to chutzpah.log",
+					"default": false
 				}
 			}
 		}
@@ -120,7 +140,8 @@
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.7.2",
 		"@types/sinon": "^7.0.13",
-		"@types/vscode": "^1.37.0",
+		"@types/tmp": "^0.2.0",
+		"@types/vscode": "^1.40.0",
 		"glob": "^7.1.4",
 		"istanbul-lib-coverage": "^2.0.5",
 		"istanbul-lib-instrument": "^3.3.0",
@@ -134,5 +155,8 @@
 		"tslint": "^5.12.1",
 		"typescript": "^3.9.5",
 		"vscode-test": "^1.0.2"
+	},
+	"dependencies": {
+		"tmp": "^0.2.1"
 	}
 }

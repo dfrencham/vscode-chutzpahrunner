@@ -28,16 +28,6 @@ suite('ContextHelpers', () => {
 		var result = contextHelpers.getPathFromUri(uri);
 		assert.equal(result !== "", true);
     });
-    
-    test('isWindows', () => {
-        var exceptionThrown = false;
-        try {
-            let result = contextHelpers.isWindows();
-        } catch (error) {
-            exceptionThrown = true;
-        }
-        assert.equal(exceptionThrown,false);
-    });
 
     test('getChromeProfilePath', () => {
         assert.equal(contextHelpers.getChromeProfilePath().length > 0, true);

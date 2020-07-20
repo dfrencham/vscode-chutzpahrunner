@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
+import * as tmp from 'tmp';
 import * as configuration from './configuration';
 
 /**
@@ -24,10 +25,9 @@ export function getPathFromUri(uri: vscode.Uri): string {
 	}
 }
 
-export function isWindows() {
-	return os.type().toLowerCase().includes("win");
-}
-
+/**
+ * Get configured profile path or return a sensible default
+ */
 export function getChromeProfilePath() {
     var profilePath = configuration.getChromeProfileFolder();
     
@@ -35,8 +35,21 @@ export function getChromeProfilePath() {
     if (profilePath.length) 
         return profilePath;
     
-    if (isWindows())
-		return "C:/ChromeDevSession";
-	else
-		return "~/ChromeDevSession";
+    return path.sep === '\\' ? "C:\\ChromeDevSession" : "~/ChromeDevSession";
+}
+
+/**
+ * Generates a temp file for coverage data and returns the name
+ */
+export function getCoverageTempFile(): string {
+	const tmpobj = tmp.fileSync({ template: 'coverage-XXXXXX.html', discardDescriptor: true });
+	return tmpobj.name;
+}
+
+/**
+ * Get a directory for a given filepath
+ * @param filePath 
+ */
+export function getDir(filePath: string) {
+	return path.dirname(filePath);
 }

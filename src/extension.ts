@@ -1,3 +1,4 @@
+import { TestParameters } from './testParameters';
 import { StateBag } from './stateBag';
 import * as vscode from "vscode";
 import * as configuration from './configuration';
@@ -6,16 +7,26 @@ import * as contextHelpers from "./contextHelpers";
 
 export function activate(context: vscode.ExtensionContext) {
 	const state = {} as StateBag;
+	let openInBrowser,coverage,newWindow: boolean;
 
 	let disposables = [];
 	disposables.push(vscode.commands.registerCommand('extension.runChutzpah', (uri: vscode.Uri) => {	
-		runChutzpah(uri,false,false,state);
+		openInBrowser = false;
+		coverage = false;
+		newWindow = false;
+		runChutzpah(uri,openInBrowser,coverage,newWindow,state);
 	}));
 	disposables.push(vscode.commands.registerCommand('extension.runChutzpahInBrowser', (uri: vscode.Uri) => {
-		runChutzpah(uri,true,false,state);
+		openInBrowser = true;
+		coverage = false;
+		newWindow = true;
+		runChutzpah(uri,openInBrowser,coverage,newWindow,state);
 	}));
 	disposables.push(vscode.commands.registerCommand('extension.runChutzpahWithCoverage', (uri: vscode.Uri) => {
-		runChutzpah(uri,true,true,state);
+		openInBrowser = false;
+		coverage = true;
+		newWindow = false;
+		runChutzpah(uri,openInBrowser,coverage,newWindow,state);
 	}));
 	context.subscriptions.push(...disposables);
 }
@@ -27,37 +38,45 @@ export function deactivate() {}
  * @param uri File or folder path to test
  * @param openBrowser Open in browser for debug
  */
-export function runChutzpah(uri: vscode.Uri, openBrowser: boolean, coverage: boolean, state: StateBag): boolean {
+export function runChutzpah(uri: vscode.Uri, openBrowser: boolean, coverage: boolean, newWindow: boolean, state: StateBag): boolean {
 
 	var chutzpahPath = configuration.getChutzpahPath();
 	if (chutzpahPath === "") {
 		vscode.window.showErrorMessage("Chutzpah Path is not valid");
 		return false;
 	}
-	var parallelism = configuration.getParallelism();
-	var testPath = contextHelpers.getPathFromUri(uri);
+	
+	let parallelism = configuration.getParallelism();
+	let testPath = contextHelpers.getPathFromUri(uri);
+	let engine = configuration.getEngine();
+	let tempFile: string|null = null;
+	let disableCORS = configuration.getConfigurationFlag("disableCORS");
 
-	let args = [`"${testPath}"`,"/engine","chrome"];
+	let args = [`"${testPath}"`,"/engine",engine];
 
-	let disableCORS = configuration.getDisableCORS();
-	if (disableCORS) {
+	if (disableCORS && engine === "chrome" && openBrowser) {
 		args.push("/browserArgs");
 		args.push(`"--disable-web-security --user-data-dir=${contextHelpers.getChromeProfilePath()}"`);
 	}
 
-	if (openBrowser)
-		args.push(...["/openInBrowser","chrome"]);
-	if (parallelism)
-		args.push(...["/parallelism",parallelism.toString()]);
-	if (coverage)
-		args.push("/coverage");
-
-	if (!openBrowser) {
-		state.outputChannel = runner.spawnTests(chutzpahPath,args,testPath,state.outputChannel);
-	} else {
-		var terminal = runner.selectTerminal();
-		runner.terminalTests(chutzpahPath,args,terminal);
+	if (openBrowser) args.push(...["/openInBrowser","chrome"]);
+	if (parallelism > 0) args.push(...["/parallelism",parallelism.toString()]);
+	if (coverage) {
+		tempFile = contextHelpers.getCoverageTempFile();
+		args.push(... ["/coverage","/coveragehtml",tempFile]);
 	}
+	if (configuration.getConfigurationFlag("trace")) args.push("/trace");
+	if (configuration.getConfigurationFlag("debug")) args.push("/debug");
+
+	const testParams = {
+		chutzpahPath: chutzpahPath,
+		args: args,
+		testPath: testPath,
+		newWindow: newWindow,
+		tempFile: tempFile
+	} as TestParameters;
+
+	state.outputChannel = runner.spawnTests(testParams,state.outputChannel);
 
 	return true;
 }

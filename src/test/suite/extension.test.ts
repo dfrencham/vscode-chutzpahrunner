@@ -35,14 +35,10 @@ suite('Extension', () => {
 		var fakeRun = sinon.fake.returns(true);
 		sinon.replace(runner,'spawnTests', fakeRun);
 
-		var fakeRun2 = sinon.fake.returns(true);
-		sinon.replace(runner,'terminalTests', fakeRun2);		
-
 		var uri = { fsPath: "path" } as vscode.Uri;
-		extension.runChutzpah(uri, false, false, {} as StateBag);
+		extension.runChutzpah(uri, false, false, false, {} as StateBag);
 
 		assert.equal(fakeRun.called, true);
-		assert.equal(fakeRun2.called, false);
 
 		sinon.restore();
 	});
@@ -59,7 +55,7 @@ suite('Extension', () => {
 		sinon.replace(configuration,'getParallelism',fake2);		
 
 		var uri = { fsPath: "" } as vscode.Uri;
-		var result = extension.runChutzpah(uri, true, true, {} as StateBag);
+		var result = extension.runChutzpah(uri, true, true,false, {} as StateBag);
 
 		assert.equal(result, false);
 		sinon.restore();
@@ -73,6 +69,8 @@ suite('Extension', () => {
 });
 
 class TestExtensionContext implements vscode.ExtensionContext {
+	extensionUri!: vscode.Uri;
+	// environmentVariableCollection!: vscode.EnvironmentVariableCollection;
     subscriptions: {
 		dispose(): any;
 	}[] = [];
